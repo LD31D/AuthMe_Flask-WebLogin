@@ -1,9 +1,20 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Login Page</title>
-    </head>
-    <body>
-        <h1>Login</h1>
-    </body>
+<html lang="en" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+  </head>
+
+  <body style="background-image: url({{ url_for('static', filename='img/background.jpg') }});">
+
+    <form class="box" action="index.html" method="post">
+      <h1>Login</h1>
+      <input type="text" name="" placeholder="Username">
+      <input type="password" name="" placeholder="Password">
+      <input type="submit" name="" value="Login">
+    </form>
+
+  </body>
 </html>
