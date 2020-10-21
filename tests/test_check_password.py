@@ -1,5 +1,5 @@
 import unittest
-from utils.check_password import check_sha256
+from utils.others.check_password import check_sha256
 
 
 class TestSHA256Checker(unittest.TestCase):
