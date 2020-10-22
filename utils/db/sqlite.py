@@ -19,14 +19,9 @@ class DataBase():
 
 		sql = ' SELECT * FROM authme WHERE username=?'
 		self.cursor.execute(sql, [(username)])
-		unit = self.cursor.fetchall()
+		unit = self.cursor.fetchone()
 
 		self.close_connection()
 
-		try:
-			return unit[0]
-
-		except IndexError:
-			return None
-
-		
+		return unit
+	
