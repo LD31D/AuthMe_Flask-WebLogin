@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for
-from flask_login import login_user, current_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 from utils.app import app, models
 from utils.others.check_password import check_sha256
@@ -38,3 +38,10 @@ def redirect_to_signin(response):
         return redirect(url_for('login') + '?next=' + request.url)
 
     return response
+
+
+@app.route('/logout', methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
