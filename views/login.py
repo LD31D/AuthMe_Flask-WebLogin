@@ -1,4 +1,5 @@
 from flask import render_template, request
+from flask_login import login_user, current_user
 
 from utils.app import app, models
 from utils.others.check_password import check_sha256
@@ -15,7 +16,7 @@ def login():
 		user = models.User.query.filter_by(username=user_input['login']).first()
 
 		if user and check_sha256(user_input['pass'], user.password):
-			print(True)
+			login_user(user)
 
 		else:
 			print(False)
