@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import render_template, request, redirect, url_for
 from flask_login import login_user, current_user
 
 from utils.app import app, models
@@ -18,7 +18,23 @@ def login():
 		if user and check_sha256(user_input['pass'], user.password):
 			login_user(user)
 
+			next_page = request.args.get('next')
+
+			if next_page:
+				return redirect(next_page)
+
+			else:
+				return redirect(url_for('index'))
+
 		else:
 			print(False)
 
 	return render_template('login/index.html')
+
+
+@app.after_request
+def redirect_to_signin(response):
+    if response.status_code == 401:
+        return redirect(url_for('login') + '?next=' + request.url)
+
+    return response
