@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block title %}Index Page{% endblock %}
+
+{% block content %}
+    <div class="box">
+    	<h1>{{user.username}}</h1>
+      	<a href='/logout'><input type="submit" value="Logout"></a>
+    </div>
+{% endblock %}

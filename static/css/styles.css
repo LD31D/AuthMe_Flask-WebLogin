@@ -4,6 +4,10 @@ body{
   font-family: sans-serif;
 }
 
+a{
+  text-decoration: none;
+}
+
 .box{
   width: 300px;
   padding: 40px;
