@@ -16,6 +16,4 @@ db.Model.metadata.reflect(db.engine)
 
 from .db import models
 
-print(models.User.query.all())
-
 # db.create_all()
