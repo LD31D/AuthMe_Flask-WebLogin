@@ -1,5 +1,5 @@
 from flask import render_template, request, redirect, url_for, flash
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import login_user
 
 from utils.app import app, models
 from utils.others.check_password import check_sha256
@@ -8,16 +8,13 @@ from utils.others.check_password import check_sha256
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
 	if request.method == "POST":
-		user_input = {
-			'login': request.form.get('login'),
-			'pass': request.form.get('password')
-		}
+		login = request.form.get('login')
+		trypass = request.form.get('password')
 
-		if user_input['login'] and user_input['pass']:
+		if login and trypass:
+			user = models.User.query.filter_by(username=login).first()
 
-			user = models.User.query.filter_by(username=user_input['login']).first()
-
-			if user and check_sha256(user_input['pass'], user.password):
+			if user and check_sha256(trypass, user.password):
 				login_user(user)
 
 				next_page = request.args.get('next')
@@ -35,18 +32,3 @@ def login():
 			flash('Fields shouldn\'t be empty')
 
 	return render_template('login/index.html')
-
-
-@app.after_request
-def redirect_to_signin(response):
-    if response.status_code == 401:
-        return redirect(url_for('login') + '?next=' + request.url)
-
-    return response
-
-
-@app.route('/logout', methods=['GET', 'POST'])
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('login'))
