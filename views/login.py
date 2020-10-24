@@ -8,7 +8,7 @@ from utils.others.check_password import check_sha256
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
 	if request.method == "POST":
-		login = request.form.get('login')
+		login = request.form.get('login').strip().lower()
 		trypass = request.form.get('password')
 
 		if login and trypass:
