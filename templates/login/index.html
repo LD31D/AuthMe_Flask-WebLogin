@@ -4,9 +4,19 @@
 
 {% block content %}
     <form class="box" action="/login/" method="post">
-      <h1>Login</h1>
-      <input type="text" name="login" placeholder="Username" autocomplete="off">
-      <input type="password" name="password" placeholder="Password">
-      <input type="submit" name="" value="Login">
+
+    	<h1>Login</h1>
+
+		{% with messages = get_flashed_messages() %}
+		  {% if messages %}
+		    {% for message in messages %}
+		      <h4 style="color: red;">{{ message }}</h4>
+		    {% endfor %}
+		  {% endif %}
+		{% endwith %}
+
+	    <input type="text" name="login" placeholder="Username" autocomplete="off">
+	    <input type="password" name="password" placeholder="Password">
+	    <input type="submit" name="" value="Login">
     </form>
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, current_user, logout_user, login_required
 
 from utils.app import app, models
@@ -13,21 +13,26 @@ def login():
 			'pass': request.form.get('password')
 		}
 
-		user = models.User.query.filter_by(username=user_input['login']).first()
+		if user_input['login'] and user_input['pass']:
 
-		if user and check_sha256(user_input['pass'], user.password):
-			login_user(user)
+			user = models.User.query.filter_by(username=user_input['login']).first()
 
-			next_page = request.args.get('next')
+			if user and check_sha256(user_input['pass'], user.password):
+				login_user(user)
 
-			if next_page:
-				return redirect(next_page)
+				next_page = request.args.get('next')
+
+				if next_page:
+					return redirect(next_page)
+
+				else:
+					return redirect(url_for('index'))
 
 			else:
-				return redirect(url_for('index'))
+				flash('Invalid login or password')
 
 		else:
-			print(False)
+			flash('Fields shouldn\'t be empty')
 
 	return render_template('login/index.html')
 
