@@ -45,3 +45,12 @@ class TestCase(unittest.TestCase):
 
         self.assertIn(b'Fields shouldn&#39;t be empty', response.data)
 
+        response = self.app.post(
+            '/login/', 
+            data={
+                'login': 'test',
+                'password': '12345678'
+            })
+
+        self.assertEqual(response.status_code, 302)
+        self.assertIn(b'<a href="/">/</a>', response.data)
